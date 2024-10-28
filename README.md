@@ -17,10 +17,7 @@ Com ele, é possível gerenciar despesas pagas via cartão de crédito, débito 
 
 ## Protótipos de tela
 Para a criação dos protótipos, utilizamos o [Figma](https://www.figma.com/), onde você pode visualizar os protótipos e os fluxos de navegação entre as telas interativas.
-[Visualize aqui o protótipo completo](https://www.figma.com/design/9C7IHxC2tM5e1u1TAglocV/Senhor-dos-Centavos?m=auto&t=IMWQBswbyiqkKM85-1). 
-
-*Exemplo de tela inicial*:
-![Tela Inicial do Senhor dos Centavos](#)  <!-- Substitua "#" pelo link da imagem ou adicione o link do Google Drive se tiver exportado todas as telas -->
+[Visualize aqui o protótipo completo](https://www.figma.com/design/9C7IHxC2tM5e1u1TAglocV/Senhor-dos-Centavos?m=auto&t=IMWQBswbyiqkKM85-1).
 
 ## Modelagem do banco de dados
 O *Senhor dos Centavos* utiliza o *Firebase* como banco de dados NoSQL para o armazenamento dos dados dos usuários. Abaixo estão os Schemas de dados principais do projeto:
