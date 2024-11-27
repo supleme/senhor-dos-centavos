@@ -1,5 +1,21 @@
 # Senhor dos Centavos
 
+###Instalação e Configuração
+*Clone o repositório:*
+git clone https://github.com/supleme/senhor-dos-centavos.git
+
+*Navegue até o diretório do projeto*
+cd centavo
+
+*Instale as dependências*
+npm install
+
+Certifique-se de configurar todas as variáveis de ambiente necessárias.
+
+###Execução
+Para iniciar o servidor de desenvolvimento, execute o comando:
+npm start
+
 ## Sobre o app
 O *Senhor dos Centavos* é um aplicativo focado em oferecer uma maneira prática e acessível para que os usuários controlem seus gastos mensais, permitindo uma visão clara e detalhada das finanças.
 Com ele, é possível gerenciar despesas pagas via cartão de crédito, débito e PIX, oferecendo uma melhor compreensão dos hábitos de consumo e auxiliando no planejamento financeiro consciente.
