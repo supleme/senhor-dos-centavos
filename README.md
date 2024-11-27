@@ -1,6 +1,6 @@
 # Senhor dos Centavos
 
-###Instalação e Configuração
+### Instalação e Configuração
 *Clone o repositório:*
 git clone https://github.com/supleme/senhor-dos-centavos.git
 
@@ -12,7 +12,7 @@ npm install
 
 Certifique-se de configurar todas as variáveis de ambiente necessárias.
 
-###Execução
+### Execução
 Para iniciar o servidor de desenvolvimento, execute o comando:
 npm start
 
