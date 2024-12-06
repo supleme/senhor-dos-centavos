@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import styles from '../styles/loginStyles';
+import usePassword from '../states/usePassword';
+import useEmail from '../states/useEmail';
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const LoginScreen = ({ navigation }: any) => {
+  const passwordRef = useRef('');
+  const emailRef = useRef('');
+
+  const {setPassword} = usePassword();
+  const {setEmail} = useEmail();
 
   const handleLogin = () => {
+    const email = emailRef.current
+    const password = passwordRef.current;
+
     if (email && password) {
-      Alert.alert("Login", "Login realizado com sucesso!");
+      setPassword(password);
+      setEmail(email);
+      navigation.navigate('Home');
     } else {
-      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
     }
   };
 
@@ -20,16 +30,14 @@ const LoginScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="E-mail"
-        value={email}
-        onChangeText={setEmail}
+        onChangeText={(text) => emailRef.current = text}
         keyboardType="email-address"
         autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
         placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
+        onChangeText={(text) => (passwordRef.current = text)}
         secureTextEntry
       />
       <Button title="Entrar" onPress={handleLogin} />
