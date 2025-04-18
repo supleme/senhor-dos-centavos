@@ -44,7 +44,7 @@ A modelagem foi definida da seguinte forma:
 
 Os protótipos de interface foram desenvolvidos no Figma para ilustrar o fluxo principal de uso do aplicativo.
 
-[Clique aqui para visualizar o protótipo no Figma]([https://www.figma.com/file/seulinkdofigma](https://www.figma.com/design/9C7IHxC2tM5e1u1TAglocV/Senhor-dos-Centavos?node-id=43-49&t=bUH2eb6MzZCyahFV-1))
+[Clique aqui para visualizar o protótipo no Figma](https://www.figma.com/design/9C7IHxC2tM5e1u1TAglocV/Senhor-dos-Centavos?node-id=43-49&t=bUH2eb6MzZCyahFV-1)
 
 As telas incluem:
 - Tela inicial (Splash)
