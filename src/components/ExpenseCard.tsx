@@ -1,36 +1,87 @@
-// TODO (sprint-1): implement expense/income card component
 import { StyleSheet, Text, View } from "react-native";
-import { Expense } from "../types";
+import { Category, Expense } from "../types";
 
 interface Props {
   expense: Expense;
+  category?: Category;
 }
 
-export default function ExpenseCard({ expense }: Props) {
+const PAYMENT_LABEL: Record<string, string> = {
+  credit: "Credit",
+  debit: "Debit",
+  pix: "PIX",
+};
+
+const PAYMENT_COLOR: Record<string, string> = {
+  credit: "#1565c0",
+  debit: "#2e7d32",
+  pix: "#6a1b9a",
+};
+
+export default function ExpenseCard({ expense, category }: Props) {
+  const color = PAYMENT_COLOR[expense.paymentType] ?? "#555";
+  const date = new Date(expense.date).toLocaleDateString("pt-BR");
+
   return (
     <View style={styles.card}>
-      <Text style={styles.amount}>R$ {expense.amount.toFixed(2)}</Text>
-      <Text style={styles.type}>{expense.paymentType}</Text>
+      <View style={styles.left}>
+        <Text style={styles.category}>{category?.name ?? "—"}</Text>
+        <Text style={styles.date}>{date}</Text>
+      </View>
+      <View style={styles.right}>
+        <Text style={styles.amount}>R$ {expense.amount.toFixed(2)}</Text>
+        <View style={[styles.badge, { backgroundColor: color }]}>
+          <Text style={styles.badgeText}>{PAYMENT_LABEL[expense.paymentType]}</Text>
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    padding: 12,
-    marginVertical: 4,
-    backgroundColor: "#f5f5f5",
-    borderRadius: 8,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 14,
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  left: {
+    gap: 4,
+  },
+  right: {
+    alignItems: "flex-end",
+    gap: 4,
+  },
+  category: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#222",
+  },
+  date: {
+    fontSize: 12,
+    color: "#999",
   },
   amount: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
+    color: "#c62828",
   },
-  type: {
-    fontSize: 14,
-    color: "#888",
-    textTransform: "capitalize",
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+  },
+  badgeText: {
+    fontSize: 11,
+    color: "#fff",
+    fontWeight: "600",
   },
 });
