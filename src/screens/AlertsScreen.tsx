@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function SplashScreen() {
+export default function AlertsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Senhor dos Centavos</Text>
-      <Text style={styles.subtitle}>Your finances, under control.</Text>
+      <Text style={styles.title}>Alerts</Text>
     </View>
   );
 }
@@ -17,12 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#888",
-    marginTop: 8,
   },
 });
