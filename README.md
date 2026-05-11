@@ -104,5 +104,5 @@ As telas incluem:
 
 ### Demonstração das telas
 
-> 📹 Link do vídeo: [*(a ser adicionado após gravação)*
+> 📹 Link do vídeo: [*(Youtube)*
 ](https://www.youtube.com/watch?v=b9QW4a9hBWc)
