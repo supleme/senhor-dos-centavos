@@ -9,7 +9,7 @@ const totalExpenses = mockExpenses.reduce((sum, e) => sum + e.amount, 0);
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>April 2025</Text>
+      <Text style={styles.title}>May 2025</Text>
       <SummaryBar totalIncome={totalIncome} totalExpenses={totalExpenses} />
       <Text style={styles.sectionTitle}>Recent Expenses</Text>
       <FlatList

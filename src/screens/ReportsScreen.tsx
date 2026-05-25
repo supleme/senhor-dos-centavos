@@ -21,7 +21,7 @@ const categorySummary = buildCategorySummary();
 export default function ReportsScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>April 2025</Text>
+      <Text style={styles.title}>May 2025</Text>
 
       <View style={styles.card}>
         <Text style={styles.cardLabel}>Total Income</Text>
