@@ -1,27 +1,35 @@
+import { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { mockCategories, mockExpenses, mockIncomes } from "../mocks/mockData";
+import { mockCategories } from "../mocks/mockData";
+import { useFinanceStore } from "../store/financeStore";
 
-function buildCategorySummary() {
-  return mockCategories
+export default function ReportsScreen() {
+  const { expenses, incomes, loadAll } = useFinanceStore();
+
+  useEffect(() => {
+    loadAll();
+  }, []);
+
+  const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
+
+  const categorySummary = mockCategories
     .filter((c) => c.type === 1)
     .map((cat) => {
-      const total = mockExpenses
+      const total = expenses
         .filter((e) => e.categoryId === cat.id)
         .reduce((sum, e) => sum + e.amount, 0);
       return { name: cat.name, total };
     })
     .filter((item) => item.total > 0)
     .sort((a, b) => b.total - a.total);
-}
 
-const totalExpenses = mockExpenses.reduce((sum, e) => sum + e.amount, 0);
-const totalIncome = mockIncomes.reduce((sum, i) => sum + i.amount, 0);
-const categorySummary = buildCategorySummary();
+  const now = new Date();
+  const monthLabel = now.toLocaleString("en-US", { month: "long", year: "numeric" });
 
-export default function ReportsScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>April 2025</Text>
+      <Text style={styles.title}>{monthLabel}</Text>
 
       <View style={styles.card}>
         <Text style={styles.cardLabel}>Total Income</Text>
@@ -50,20 +58,27 @@ export default function ReportsScreen() {
       </View>
 
       <Text style={styles.sectionTitle}>Expenses by Category</Text>
-      {categorySummary.map((item) => {
-        const percentage = totalExpenses > 0 ? (item.total / totalExpenses) * 100 : 0;
-        return (
-          <View key={item.name} style={styles.categoryRow}>
-            <View style={styles.categoryHeader}>
-              <Text style={styles.categoryName}>{item.name}</Text>
-              <Text style={styles.categoryAmount}>R$ {item.total.toFixed(2)}</Text>
+
+      {categorySummary.length === 0 ? (
+        <View style={styles.empty}>
+          <Text style={styles.emptyText}>No expenses to display.</Text>
+        </View>
+      ) : (
+        categorySummary.map((item) => {
+          const percentage = totalExpenses > 0 ? (item.total / totalExpenses) * 100 : 0;
+          return (
+            <View key={item.name} style={styles.categoryRow}>
+              <View style={styles.categoryHeader}>
+                <Text style={styles.categoryName}>{item.name}</Text>
+                <Text style={styles.categoryAmount}>R$ {item.total.toFixed(2)}</Text>
+              </View>
+              <View style={styles.barBackground}>
+                <View style={[styles.barFill, { width: `${percentage}%` }]} />
+              </View>
             </View>
-            <View style={styles.barBackground}>
-              <View style={[styles.barFill, { width: `${percentage}%` }]} />
-            </View>
-          </View>
-        );
-      })}
+          );
+        })
+      )}
     </ScrollView>
   );
 }
@@ -147,5 +162,13 @@ const styles = StyleSheet.create({
     height: 6,
     backgroundColor: "#2e7d32",
     borderRadius: 3,
+  },
+  empty: {
+    alignItems: "center",
+    marginTop: 32,
+  },
+  emptyText: {
+    fontSize: 14,
+    color: "#bbb",
   },
 });
