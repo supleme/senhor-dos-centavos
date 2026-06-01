@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pdm",
-    "slug": "pdm",
+    "name": "Senhor dos Centavos",
+    "slug": "senhor-dos-centavos",
     "scheme": "senhor-dos-centavos",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,10 +22,17 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.cesarabreu.senhordoscentavos"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "059b662c-89b6-4297-a071-e67ce0545045"
+      }
+    },
+    "owner": "cesarabreu"
   }
 }
