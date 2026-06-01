@@ -1,12 +1,46 @@
-// TODO (sprint zustand): implement Zustand global store
-// Placeholder — will be implemented in @cvabreu/4/zustand-global-state
-
+import { create } from "zustand";
+import { ExpenseRepository } from "../database/ExpenseRepository";
+import { IncomeRepository } from "../database/IncomeRepository";
 import { Expense, Income } from "../types";
 
-export interface FinanceState {
+interface FinanceState {
   expenses: Expense[];
   incomes: Income[];
+  loadAll: () => void;
   addExpense: (expense: Expense) => void;
-  addIncome: (income: Income) => void;
   removeExpense: (id: string) => void;
+  addIncome: (income: Omit<Income, "id">) => void;
+  removeIncome: (id: number) => void;
 }
+
+export const useFinanceStore = create<FinanceState>((set) => ({
+  expenses: [],
+  incomes: [],
+
+  loadAll: () => {
+    set({
+      expenses: ExpenseRepository.findAll(),
+      incomes: IncomeRepository.findAll(),
+    });
+  },
+
+  addExpense: (expense) => {
+    ExpenseRepository.insert(expense);
+    set((state) => ({ expenses: [expense, ...state.expenses] }));
+  },
+
+  removeExpense: (id) => {
+    ExpenseRepository.delete(id);
+    set((state) => ({ expenses: state.expenses.filter((e) => e.id !== id) }));
+  },
+
+  addIncome: (income) => {
+    const id = IncomeRepository.insert(income);
+    set((state) => ({ incomes: [{ ...income, id }, ...state.incomes] }));
+  },
+
+  removeIncome: (id) => {
+    IncomeRepository.delete(id);
+    set((state) => ({ incomes: state.incomes.filter((i) => i.id !== id) }));
+  },
+}));

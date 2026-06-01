@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Category, Expense } from "../types";
 
 interface Props {
   expense: Expense;
   category?: Category;
+  onDelete?: () => void;
 }
 
 const PAYMENT_LABEL: Record<string, string> = {
@@ -18,7 +20,7 @@ const PAYMENT_COLOR: Record<string, string> = {
   pix: "#6a1b9a",
 };
 
-export default function ExpenseCard({ expense, category }: Props) {
+export default function ExpenseCard({ expense, category, onDelete }: Props) {
   const color = PAYMENT_COLOR[expense.paymentType] ?? "#555";
   const date = new Date(expense.date).toLocaleDateString("pt-BR");
 
@@ -30,8 +32,15 @@ export default function ExpenseCard({ expense, category }: Props) {
       </View>
       <View style={styles.right}>
         <Text style={styles.amount}>R$ {expense.amount.toFixed(2)}</Text>
-        <View style={[styles.badge, { backgroundColor: color }]}>
-          <Text style={styles.badgeText}>{PAYMENT_LABEL[expense.paymentType]}</Text>
+        <View style={styles.row}>
+          <View style={[styles.badge, { backgroundColor: color }]}>
+            <Text style={styles.badgeText}>{PAYMENT_LABEL[expense.paymentType]}</Text>
+          </View>
+          {onDelete && (
+            <TouchableOpacity onPress={onDelete} style={styles.deleteBtn} hitSlop={8}>
+              <Ionicons name="trash-outline" size={16} color="#c62828" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -60,6 +69,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     gap: 4,
   },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
   category: {
     fontSize: 15,
     fontWeight: "600",
@@ -83,5 +97,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "#fff",
     fontWeight: "600",
+  },
+  deleteBtn: {
+    padding: 2,
   },
 });
