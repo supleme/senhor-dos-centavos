@@ -1,9 +1,9 @@
 import { Income } from "../types";
-import db from "./database";
+import { getDb } from "./database";
 
 export const IncomeRepository = {
   insert(income: Omit<Income, "id">): number {
-    const result = db.runSync(
+    const result = getDb().runSync(
       "INSERT INTO incomes (userId, categoryId, amount, date) VALUES (?, ?, ?, ?)",
       income.userId,
       income.categoryId,
@@ -14,10 +14,10 @@ export const IncomeRepository = {
   },
 
   findAll(): Income[] {
-    return db.getAllSync<Income>("SELECT * FROM incomes ORDER BY date DESC");
+    return getDb().getAllSync<Income>("SELECT * FROM incomes ORDER BY date DESC");
   },
 
   delete(id: number): void {
-    db.runSync("DELETE FROM incomes WHERE id = ?", id);
+    getDb().runSync("DELETE FROM incomes WHERE id = ?", id);
   },
 };

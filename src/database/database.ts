@@ -6,18 +6,26 @@ import {
   CREATE_TABLE_USERS,
 } from "./schema";
 
-const db = SQLite.openDatabaseSync("senhor-dos-centavos.db");
+let db: SQLite.SQLiteDatabase | null = null;
 
-export function initDatabase() {
-  db.execSync(CREATE_TABLE_USERS);
-  db.execSync(CREATE_TABLE_CATEGORIES);
-  db.execSync(CREATE_TABLE_EXPENSES);
-  db.execSync(CREATE_TABLE_INCOMES);
-  seedCategories();
+export function getDb(): SQLite.SQLiteDatabase {
+  if (!db) {
+    db = SQLite.openDatabaseSync("senhor-dos-centavos.db");
+  }
+  return db;
 }
 
-function seedCategories() {
-  const row = db.getFirstSync<{ count: number }>("SELECT COUNT(*) as count FROM categories");
+export function initDatabase() {
+  const database = getDb();
+  database.execSync(CREATE_TABLE_USERS);
+  database.execSync(CREATE_TABLE_CATEGORIES);
+  database.execSync(CREATE_TABLE_EXPENSES);
+  database.execSync(CREATE_TABLE_INCOMES);
+  seedCategories(database);
+}
+
+function seedCategories(database: SQLite.SQLiteDatabase) {
+  const row = database.getFirstSync<{ count: number }>("SELECT COUNT(*) as count FROM categories");
   if ((row?.count ?? 0) === 0) {
     const categories: [number, string, number][] = [
       [1, "Food", 1],
@@ -29,9 +37,7 @@ function seedCategories() {
       [7, "Freelance", 2],
     ];
     for (const [id, name, type] of categories) {
-      db.runSync("INSERT OR IGNORE INTO categories (id, name, type) VALUES (?, ?, ?)", id, name, type);
+      database.runSync("INSERT OR IGNORE INTO categories (id, name, type) VALUES (?, ?, ?)", id, name, type);
     }
   }
 }
-
-export default db;
